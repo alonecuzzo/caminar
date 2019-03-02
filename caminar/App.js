@@ -1,13 +1,8 @@
 import React, { Component } from "react"
 import { Image, FlatList, StyleSheet, Text, View } from "react-native"
+import { createStackNavigator, createAppContainer } from "react-navigation"
 
-export default class App extends Component {
-  render() {
-    return <RoutesScreen />
-  }
-}
-
-class RoutesScreen extends Component {
+class RoutesScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -29,6 +24,14 @@ class RoutesScreen extends Component {
     )
   }
 }
+
+const AppNavigator = createStackNavigator({
+  RoutesScreen: {
+    screen: RoutesScreen
+  }
+})
+
+export default createAppContainer(AppNavigator)
 
 class RouteScreen extends Component {
   render() {
@@ -153,7 +156,7 @@ const routes = [
         key: "McNally Jackson",
         heroImageUrl:
           "https://s3-media3.fl.yelpcdn.com/bphoto/fLniQKYlzLZ7u8QwwHVvYA/o.jpg",
-        location: { latitude: 40.717290, longitude: -73.961640 },
+        location: { latitude: 40.71729, longitude: -73.96164 },
         order: 3,
         address: {
           streetAddress: "76 N 4th St",
