@@ -1,8 +1,13 @@
 import React, { Component } from "react"
 import { Image, FlatList, StyleSheet, Text, View } from "react-native"
 
-//this is really the route view
 export default class App extends Component {
+  render() {
+    return <RouteScreen />
+  }
+}
+
+class RouteScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -76,7 +81,7 @@ const route = [
     key: "Domino Park",
     heroImageUrl:
       "https://www.cityguideny.com/columnpic2/xdomino-park.jpg,qModPagespeed=offa.pagespeed.ic.PLXqA1QQZ_.jpg",
-    location: { latitude: 40.717260, longitude: -73.965770 },
+    location: { latitude: 40.71726, longitude: -73.96577 },
     order: 4,
     address: {
       streetAddress: "15 River St",
