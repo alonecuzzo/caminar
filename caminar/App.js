@@ -7,7 +7,11 @@ import {
   View,
   TouchableHighlight
 } from "react-native"
-import { createStackNavigator, createAppContainer } from "react-navigation"
+import {
+  createStackNavigator,
+  createAppContainer,
+  createBottomTabNavigator
+} from "react-navigation"
 
 class RoutesScreen extends React.Component {
   render() {
@@ -63,12 +67,18 @@ class RouteDetailScreen extends Component {
               <Text>
                 {item.address.city}, {item.address.zipCode}
               </Text>
-              <Text>{item.address.zipCode}</Text>
+              <Text> {item.address.zipCode} </Text>
             </View>
           )}
         />
       </View>
     )
+  }
+}
+
+class SearchScreen extends Component {
+  render() {
+    return <Text>Hello Search</Text>
   }
 }
 
@@ -195,9 +205,18 @@ const styles = StyleSheet.create({
   }
 })
 
-const AppNavigator = createStackNavigator({
+const RoutesStack = createStackNavigator({
   RoutesScreen: RoutesScreen,
   RouteDetailScreen: RouteDetailScreen
 })
 
-export default createAppContainer(AppNavigator)
+const SearchStack = createStackNavigator({
+  SearchScreen: SearchScreen
+})
+
+export default createAppContainer(
+  createBottomTabNavigator({
+    Routes: RoutesStack,
+    Search: SearchStack
+  })
+)
