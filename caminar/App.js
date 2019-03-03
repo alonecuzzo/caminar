@@ -1,5 +1,12 @@
 import React, { Component } from "react"
-import { Image, FlatList, StyleSheet, Text, View } from "react-native"
+import {
+  Image,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight
+} from "react-native"
 import { createStackNavigator, createAppContainer } from "react-navigation"
 
 class RoutesScreen extends React.Component {
@@ -9,15 +16,22 @@ class RoutesScreen extends React.Component {
         <FlatList
           data={routes}
           renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Image
-                style={styles.heroImage}
-                source={{
-                  uri: item.heroImageUrl
-                }}
-              />
-              <Text>{item.key}</Text>
-            </View>
+            <TouchableHighlight
+              onPress={() =>
+                this.props.navigation.navigate("RouteDetailScreen")
+              }
+              underlayColor="white"
+            >
+              <View style={styles.item}>
+                <Image
+                  style={styles.heroImage}
+                  source={{
+                    uri: item.heroImageUrl
+                  }}
+                />
+                <Text>{item.key}</Text>
+              </View>
+            </TouchableHighlight>
           )}
         />
       </View>
@@ -25,20 +39,12 @@ class RoutesScreen extends React.Component {
   }
 }
 
-const AppNavigator = createStackNavigator({
-  RoutesScreen: {
-    screen: RoutesScreen
-  }
-})
-
-export default createAppContainer(AppNavigator)
-
-class RouteScreen extends Component {
+class RouteDetailScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={route}
+          data={routes[0].route}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <Image
@@ -183,3 +189,10 @@ const styles = StyleSheet.create({
     flex: 1
   }
 })
+
+const AppNavigator = createStackNavigator({
+  RoutesScreen: RoutesScreen,
+  RouteDetailScreen: RouteDetailScreen
+})
+
+export default createAppContainer(AppNavigator)
