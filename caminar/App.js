@@ -15,10 +15,12 @@ class RoutesScreen extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={routes}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <TouchableHighlight
               onPress={() =>
-                this.props.navigation.navigate("RouteDetailScreen")
+                this.props.navigation.navigate("RouteDetailScreen", {
+                  route: routes[index]
+                })
               }
               underlayColor="white"
             >
@@ -41,10 +43,13 @@ class RoutesScreen extends React.Component {
 
 class RouteDetailScreen extends Component {
   render() {
+    const { navigation } = this.props
+    const route = navigation.getParam("route", {})
+
     return (
       <View style={styles.container}>
         <FlatList
-          data={routes[0].route}
+          data={route.route}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <Image
