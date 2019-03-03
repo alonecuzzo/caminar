@@ -63,7 +63,7 @@ class RouteDetailScreen extends Component {
               <Text>
                 {item.address.city}, {item.address.zipCode}
               </Text>
-              <Text>{item.address.zipCode}</Text>
+              <Text> {item.address.zipCode} </Text>
             </View>
           )}
         />
