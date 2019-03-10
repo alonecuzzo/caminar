@@ -7,6 +7,7 @@ import {
   View,
   TouchableHighlight
 } from "react-native"
+import MapView, { Marker } from "react-native-maps"
 import {
   createStackNavigator,
   createAppContainer,
@@ -46,14 +47,45 @@ class RoutesScreen extends React.Component {
 }
 
 class RouteDetailScreen extends Component {
-  render() {
-    const { navigation } = this.props
+  constructor(props) {
+    super(props)
+    const { navigation } = props
     const route = navigation.getParam("route", {})
+    this.state = { route: route }
+    this.mapRef = null
+  }
 
+  componentDidMount() {
+    var markers = this.state.route.route.map(item => item.key)
+    console.log(markers)
+    this.mapRef.fitToSuppliedMarkers(
+      markers,
+      false // not animated
+    )
+  }
+
+  render() {
     return (
       <View style={styles.container}>
+        <MapView
+          ref={ref => {
+            this.mapRef = ref
+          }}
+          style={{ flex: 1 }}
+        >
+          {this.state.route.route.map(item => (
+            <Marker
+              key={item.key}
+              identifier={item.key}
+              coordinate={item.location}
+              title={item.key}
+              description="A description"
+            />
+          ))}
+        </MapView>
         <FlatList
-          data={route.route}
+          style={styles.routeList}
+          data={this.state.route.route}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <Image
@@ -65,9 +97,9 @@ class RouteDetailScreen extends Component {
               <Text>{item.key}</Text>
               <Text>{item.address.streetAddress}</Text>
               <Text>
-                {item.address.city}, {item.address.zipCode}
+                {item.address.city}, {item.address.state}
               </Text>
-              <Text> {item.address.zipCode} </Text>
+              <Text>{item.address.zipCode}</Text>
             </View>
           )}
         />
@@ -78,7 +110,7 @@ class RouteDetailScreen extends Component {
 
 class SearchScreen extends Component {
   render() {
-    return <Text>Hello Search</Text>
+    return <Text>LOL</Text>
   }
 }
 
@@ -194,6 +226,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 22
+  },
+  routeList: {
+    flex: 1
   },
   item: {
     padding: 10,
